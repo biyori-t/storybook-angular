@@ -12,16 +12,30 @@ module.exports = {
       isolatedModules: true,
     },
   },
-  moduleNameMapper: {
-    "\\.(css|less)$": "<rootDir>/src/jest-config/__mocks__/styleMock.js",
-    "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
-      "<rootDir>/src/jest-config/__mocks__fileMock.js",
-  },
   transform: {
     "^.+\\.(ts|html)$": "ts-jest",
     "^.+\\.js$": "babel-jest",
     "^.+\\.stories\\.[jt]sx?$": "@storybook/addon-storyshots/injectFileName",
   },
+  transformIgnorePatterns: ["node_modules/(?!@storybook/*)"],
+  testPathIgnorePatterns: [
+    "<rootDir>/node_modules/",
+    "<rootDir>/dist/",
+    "<rootDir>/storybook-static/",
+    "<rootDir>/src/test.ts",
+  ],
   moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node", ".html"],
-  transformIgnorePatterns: ["node_modules/(?!(@storybook/addon-storyshots)/)"],
+  moduleNameMapper: {
+    "jest-preset-angular/build/setup-jest": "jest-preset-angular/setup-jest",
+    "jest-preset-angular/build/AngularNoNgAttributesSnapshotSerializer":
+      "jest-preset-angular/build/serializers/no-ng-attributes",
+    "jest-preset-angular/build/AngularSnapshotSerializer":
+      "jest-preset-angular/build/serializers/ng-snapshot",
+    "jest-preset-angular/build/HTMLCommentSerializer":
+      "jest-preset-angular/build/serializers/html-comment",
+  },
+  snapshotSerializers: [
+    "jest-preset-angular/build/serializers/ng-snapshot.js",
+    "jest-preset-angular/build/serializers/html-comment.js",
+  ],
 };
